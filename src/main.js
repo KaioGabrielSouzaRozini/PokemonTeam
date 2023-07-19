@@ -1,0 +1,297 @@
+//HTML a ser mostrado ao usuario
+const pokemonName = document.querySelector(".pokemon_name");
+const pokemonNumber = document.querySelector(".pokemon_number");
+const pokemonType = document.querySelector(".pokemon_type");
+const pokemonImage = document.querySelector(".pokemon_image");
+const pokemonImage1 = document.querySelector(".pokemon_image1");
+const pokemonImage2 = document.querySelector(".pokemon_image2");
+const pokemonImage3 = document.querySelector(".pokemon_image3");
+const pokemonImage4 = document.querySelector(".pokemon_image4");
+const pokemonImage5 = document.querySelector(".pokemon_image5");
+const pokemonFilters = document.querySelector(".pokemon_filter");
+const pokemonEvolve1 = document.querySelector(".pokemon_image_evolve1");
+const pokemonEvolve2 = document.querySelector(".pokemon_image_evolve2");
+const divPokemonEvolve1 = document.querySelector(".evolve1");
+const divPokemonEvolve2 = document.querySelector(".evolve2");
+
+//Botoes e inputs a serem manipulados
+const form = document.querySelector(".form");
+const input = document.querySelector(".input__search");
+const buttonPrev = document.querySelector(".btn-prev");
+const buttonNext = document.querySelector(".btn-next");
+const button1 = document.querySelector(".btn-1");
+const button2 = document.querySelector(".btn-2");
+const button3 = document.querySelector(".btn-3");
+const button4 = document.querySelector(".btn-4");
+const button5 = document.querySelector(".btn-5");
+const select = document.querySelector(".select");
+
+const typeColors = {
+  normal: "#A0522D",
+  fighting: "#A0522D",
+  flying: "#FFDEAD",
+  poison: "#A020F0",
+  ground: "#B8860B",
+  rock: "#BC8F8F",
+  bug: "#9ACD32",
+  ghost: "#7B68EE",
+  fire: "#FF6347",
+  water: "#00FFFF",
+  grass: "#00FF00",
+  electric: "#CCCC00",
+  psychic: "#FFA500",
+  ice: "#DCDCDC",
+  dragon: "#DC143C",
+  dark: "#4F4F4F",
+  fairy: "#FF00FF",
+  steel: "#708090",
+};
+
+let pokemonFilter = "";
+let searchPokemon = 1;
+let searchPokemonType = 0;
+let data2;
+let data;
+
+const fetchpokemon = async (pokemon) => {
+  const APIResponse = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+  );
+
+  if (APIResponse.status == 200) {
+    const data = await APIResponse.json();
+
+    return data;
+  }
+};
+
+const fetchEvolution = async (pokemon) => {
+  const APIResponseEvolution = await fetch(
+    `https://pokeapi.co/api/v2/pokemon-species/${pokemon}`
+  );
+  const datas = await APIResponseEvolution.json();
+  const evolve = datas["evolution_chain"]["url"];
+  const APIResponseEvolutionPokemon = await fetch(evolve);
+  const evolution = await APIResponseEvolutionPokemon.json();
+
+  let evolution1;
+  let evolution2;
+
+  if (evolution["chain"]["evolves_to"][0] != undefined) {
+    evolution1 = evolution["chain"]["evolves_to"][0]["species"]["name"];
+
+    data = await fetchpokemon(evolution1);
+    if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
+      evolution2 =
+        evolution["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"];
+
+      data2 = await fetchpokemon(evolution2);
+    }
+  }
+
+  if (evolution["chain"]["evolves_to"][0] != undefined) {
+    if (
+      data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
+        "front_default"
+      ] != null
+    ) {
+      pokemonEvolve1.src =
+        data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
+          "front_default"
+        ];
+    } else if (
+      data["sprites"]["versions"]["generation-v"]["black-white"][
+        "front_default"
+      ] != null
+    ) {
+      pokemonEvolve1.src =
+        data["sprites"]["versions"]["generation-v"]["black-white"][
+          "front_default"
+        ];
+    } else {
+      pokemonEvolve1.src = data["sprites"]["front_default"];
+    }
+    if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
+      if (
+        data2["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
+          "front_default"
+        ] != null
+      ) {
+        pokemonEvolve2.src =
+          data2["sprites"]["versions"]["generation-v"]["black-white"][
+            "animated"
+          ]["front_default"];
+      } else if (
+        data2["sprites"]["versions"]["generation-v"]["black-white"][
+          "front_default"
+        ] != null
+      ) {
+        pokemonEvolve2.src =
+          data2["sprites"]["versions"]["generation-v"]["black-white"][
+            "front_default"
+          ];
+      } else {
+        pokemonEvolve2.src = data2["sprites"]["front_default"];
+      }
+    } else {
+      pokemonEvolve2.src = "";
+    }
+  } else {
+    pokemonEvolve1.src = "";
+    pokemonEvolve2.src = "";
+  }
+};
+
+const fetchtype = async (type) => {
+  const APIPokemonType = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+
+  const data = await APIPokemonType.json();
+
+  const pokemon = data.pokemon[searchPokemonType].pokemon.name;
+
+  renderPokemon(pokemon);
+};
+
+const renderPokemon = async (pokemon) => {
+  pokemonName.innerHTML = "Carregando";
+
+  const data = await fetchpokemon(pokemon);
+
+  if (data) {
+    pokemonName.innerHTML = data.name;
+    pokemonNumber.innerHTML = data.id;
+
+    if (data.types[1]) {
+      pokemonType.innerHTML =
+        data.types[0].type.name + "|" + data.types[1].type.name;
+    } else {
+      pokemonType.innerHTML = data.types[0].type.name;
+    }
+
+    if (
+      data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
+        "front_default"
+      ] != null
+    ) {
+      pokemonImage.src =
+        data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
+          "front_default"
+        ];
+    } else if (
+      data["sprites"]["versions"]["generation-v"]["black-white"][
+        "front_default"
+      ] != null
+    ) {
+      pokemonImage.src =
+        data["sprites"]["versions"]["generation-v"]["black-white"][
+          "front_default"
+        ];
+    } else {
+      pokemonImage.src = data["sprites"]["front_default"];
+    }
+
+    input.value = "";
+    searchPokemon = data.id;
+  } else {
+    pokemonName.innerHTML = "Pokemon não encontrado ";
+    pokemonNumber.innerHTML = "";
+    input.value = "";
+  }
+  fetchEvolution(pokemon);
+};
+
+//Buttons 1
+
+buttonPrev.addEventListener("click", () => {
+  if (searchPokemon > 1) {
+    if (pokemonFilter == "") {
+      searchPokemon -= 1;
+      renderPokemon(searchPokemon);
+    } else {
+      if (searchPokemonType > 0) {
+        searchPokemonType -= 1;
+        fetchtype(pokemonFilter);
+      }
+    }
+    searchPokemon -= 1;
+  }
+});
+
+select.addEventListener("change", () => {
+  var value = select.options[select.selectedIndex].value;
+
+  pokemonFilter = value;
+
+  pokemonFilters.style.backgroundColor = typeColors[value];
+
+  searchPokemonType = 0;
+  fetchtype(pokemonFilter);
+  if (pokemonFilter != "") {
+    pokemonFilters.innerHTML = value;
+  }
+});
+
+pokemonFilters.addEventListener("click", () => {
+  if (pokemonFilter != "") {
+    pokemonFilter = "";
+    pokemonFilters.innerHTML = ``;
+    searchPokemonType = 0;
+    pokemonFilters.style.backgroundColor = "white";
+  }
+});
+
+//Buttons 2
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  renderPokemon(input.value.toLowerCase());
+});
+
+buttonNext.addEventListener("click", () => {
+  if (searchPokemon < 1011) {
+    searchPokemon += 1;
+
+    if (pokemonFilter == "") {
+      renderPokemon(searchPokemon);
+    } else {
+      searchPokemonType += 1;
+      fetchtype(pokemonFilter);
+    }
+  }
+});
+
+button1.addEventListener("click", () => {
+  pokemonImage1.src = pokemonImage.src;
+
+  renderPokemon(searchPokemon);
+});
+button2.addEventListener("click", () => {
+  pokemonImage2.src = pokemonImage.src;
+
+  renderPokemon(searchPokemon);
+});
+button3.addEventListener("click", () => {
+  pokemonImage3.src = pokemonImage.src;
+
+  renderPokemon(searchPokemon);
+});
+button4.addEventListener("click", () => {
+  pokemonImage4.src = pokemonImage.src;
+
+  renderPokemon(searchPokemon);
+});
+button5.addEventListener("click", () => {
+  pokemonImage5.src = pokemonImage.src;
+
+  renderPokemon(searchPokemon);
+});
+
+divPokemonEvolve1.addEventListener("click", () => {
+  renderPokemon(data["name"]);
+});
+divPokemonEvolve2.addEventListener("click", () => {
+  console.log();
+  renderPokemon(data2["name"]);
+});
+
+renderPokemon(searchPokemon);
