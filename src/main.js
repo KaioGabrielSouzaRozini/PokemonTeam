@@ -3,11 +3,11 @@ const pokemonName = document.querySelector(".pokemon_name");
 const pokemonNumber = document.querySelector(".pokemon_number");
 const pokemonType = document.querySelector(".pokemon_type");
 const pokemonImage = document.querySelector(".pokemon_image");
-const pokemonImage1 = document.querySelector(".pokemon_image1");
-const pokemonImage2 = document.querySelector(".pokemon_image2");
-const pokemonImage3 = document.querySelector(".pokemon_image3");
-const pokemonImage4 = document.querySelector(".pokemon_image4");
-const pokemonImage5 = document.querySelector(".pokemon_image5");
+const pokemonTeam1 = document.querySelector(".pokemon_Team1");
+const pokemonTeam2 = document.querySelector(".pokemon_Team2");
+const pokemonTeam3 = document.querySelector(".pokemon_Team3");
+const pokemonTeam4 = document.querySelector(".pokemon_Team4");
+const pokemonTeam5 = document.querySelector(".pokemon_Team5");
 const pokemonFilters = document.querySelector(".pokemon_filter");
 const pokemonEvolve1 = document.querySelector(".pokemon_image_evolve1");
 const pokemonEvolve2 = document.querySelector(".pokemon_image_evolve2");
@@ -50,8 +50,8 @@ const typeColors = {
 let pokemonFilter = "";
 let searchPokemon = 1;
 let searchPokemonType = 0;
-let data2;
-let data;
+let dataEvolution2;
+let dataEvolution1;
 
 const fetchpokemon = async (pokemon) => {
   const APIResponse = await fetch(
@@ -80,58 +80,58 @@ const fetchEvolution = async (pokemon) => {
   if (evolution["chain"]["evolves_to"][0] != undefined) {
     evolution1 = evolution["chain"]["evolves_to"][0]["species"]["name"];
 
-    data = await fetchpokemon(evolution1);
+    dataEvolution1 = await fetchpokemon(evolution1);
     if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
       evolution2 =
         evolution["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"];
 
-      data2 = await fetchpokemon(evolution2);
+      dataEvolution2 = await fetchpokemon(evolution2);
     }
   }
 
   if (evolution["chain"]["evolves_to"][0] != undefined) {
     if (
-      data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
-        "front_default"
-      ] != null
+      dataEvolution1["sprites"]["versions"]["generation-v"]["black-white"][
+        "animated"
+      ]["front_default"] != null
     ) {
       pokemonEvolve1.src =
-        data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
-          "front_default"
-        ];
+        dataEvolution1["sprites"]["versions"]["generation-v"]["black-white"][
+          "animated"
+        ]["front_default"];
     } else if (
-      data["sprites"]["versions"]["generation-v"]["black-white"][
+      dataEvolution1["sprites"]["versions"]["generation-v"]["black-white"][
         "front_default"
       ] != null
     ) {
       pokemonEvolve1.src =
-        data["sprites"]["versions"]["generation-v"]["black-white"][
+        dataEvolution1["sprites"]["versions"]["generation-v"]["black-white"][
           "front_default"
         ];
     } else {
-      pokemonEvolve1.src = data["sprites"]["front_default"];
+      pokemonEvolve1.src = dataEvolution1["sprites"]["front_default"];
     }
     if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
       if (
-        data2["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
-          "front_default"
-        ] != null
+        dataEvolution2["sprites"]["versions"]["generation-v"]["black-white"][
+          "animated"
+        ]["front_default"] != null
       ) {
         pokemonEvolve2.src =
-          data2["sprites"]["versions"]["generation-v"]["black-white"][
+          dataEvolution2["sprites"]["versions"]["generation-v"]["black-white"][
             "animated"
           ]["front_default"];
       } else if (
-        data2["sprites"]["versions"]["generation-v"]["black-white"][
+        dataEvolution2["sprites"]["versions"]["generation-v"]["black-white"][
           "front_default"
         ] != null
       ) {
         pokemonEvolve2.src =
-          data2["sprites"]["versions"]["generation-v"]["black-white"][
+          dataEvolution2["sprites"]["versions"]["generation-v"]["black-white"][
             "front_default"
           ];
       } else {
-        pokemonEvolve2.src = data2["sprites"]["front_default"];
+        pokemonEvolve2.src = dataEvolution2["sprites"]["front_default"];
       }
     } else {
       pokemonEvolve2.src = "";
@@ -261,37 +261,37 @@ buttonNext.addEventListener("click", () => {
 });
 
 button1.addEventListener("click", () => {
-  pokemonImage1.src = pokemonImage.src;
+  pokemonTeam1.src = pokemonImage.src;
 
   renderPokemon(searchPokemon);
 });
 button2.addEventListener("click", () => {
-  pokemonImage2.src = pokemonImage.src;
+  pokemonTeam2.src = pokemonImage.src;
 
   renderPokemon(searchPokemon);
 });
 button3.addEventListener("click", () => {
-  pokemonImage3.src = pokemonImage.src;
+  pokemonTeam3.src = pokemonImage.src;
 
   renderPokemon(searchPokemon);
 });
 button4.addEventListener("click", () => {
-  pokemonImage4.src = pokemonImage.src;
+  pokemonTeam4.src = pokemonImage.src;
 
   renderPokemon(searchPokemon);
 });
 button5.addEventListener("click", () => {
-  pokemonImage5.src = pokemonImage.src;
+  pokemonTeam5.src = pokemonImage.src;
 
   renderPokemon(searchPokemon);
 });
 
 divPokemonEvolve1.addEventListener("click", () => {
-  renderPokemon(data["name"]);
+  renderPokemon(dataEvolution1["name"]);
 });
 divPokemonEvolve2.addEventListener("click", () => {
   console.log();
-  renderPokemon(data2["name"]);
+  renderPokemon(dataEvolution2["name"]);
 });
 
 renderPokemon(searchPokemon);
