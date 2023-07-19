@@ -69,9 +69,10 @@ const fetchEvolution = async (pokemon) => {
   const APIResponseEvolution = await fetch(
     `https://pokeapi.co/api/v2/pokemon-species/${pokemon}`
   );
-  const datas = await APIResponseEvolution.json();
-  const evolve = datas["evolution_chain"]["url"];
-  const APIResponseEvolutionPokemon = await fetch(evolve);
+  const data = await APIResponseEvolution.json();
+  const APIResponseEvolutionPokemon = await fetch(
+    data["evolution_chain"]["url"]
+  );
   const evolution = await APIResponseEvolutionPokemon.json();
 
   let evolution1;

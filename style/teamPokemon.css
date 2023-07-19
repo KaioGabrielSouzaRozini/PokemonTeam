@@ -22,67 +22,20 @@
   display: flex;
   border: 3px solid black;
 }
-.house1 {
+.pokemonCard {
   width: 20%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.house2 {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.house3 {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.house4 {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.house5 {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pokemon_Team1 {
-  width: 200px;
-}
-.pokemon_Team2 {
-  width: 200px;
-}
-.pokemon_Team3 {
-  width: 200px;
-}
-.pokemon_Team4 {
-  width: 200px;
-}
-.pokemon_Team5 {
+
+.pokemon_Team {
   width: 200px;
 }
 
 /*Responsividade -------------------------------------------------------*/
 @media (max-width: 1500px) {
-  .pokemon_image1 {
-    width: 90%;
-  }
-  .pokemon_image2 {
-    width: 90%;
-  }
-  .pokemon_image3 {
-    width: 90%;
-  }
-  .pokemon_image4 {
-    width: 90%;
-  }
-  .pokemon_image5 {
+  .pokemon_Team {
     width: 90%;
   }
 }
