@@ -65,6 +65,16 @@ const fetchpokemon = async (pokemon) => {
   }
 };
 
+const fetchtype = async (type) => {
+  const APIPokemonType = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+
+  const data = await APIPokemonType.json();
+
+  const pokemon = data.pokemon[searchPokemonType].pokemon.name;
+
+  renderPokemon(pokemon);
+};
+
 const fetchEvolution = async (pokemon) => {
   const APIResponseEvolution = await fetch(
     `https://pokeapi.co/api/v2/pokemon-species/${pokemon}`
@@ -130,16 +140,6 @@ const hasImageCheck = (data, pokemonEvolve) => {
   } else {
     pokemonEvolve.src = data["sprites"]["front_default"];
   }
-};
-
-const fetchtype = async (type) => {
-  const APIPokemonType = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
-
-  const data = await APIPokemonType.json();
-
-  const pokemon = data.pokemon[searchPokemonType].pokemon.name;
-
-  renderPokemon(pokemon);
 };
 
 const renderPokemon = async (pokemon) => {
