@@ -69,6 +69,7 @@ const fetchEvolution = async (pokemon) => {
   const APIResponseEvolution = await fetch(
     `https://pokeapi.co/api/v2/pokemon-species/${pokemon}`
   );
+
   const data = await APIResponseEvolution.json();
   const APIResponseEvolutionPokemon = await fetch(
     data["evolution_chain"]["url"]
@@ -81,7 +82,11 @@ const fetchEvolution = async (pokemon) => {
   if (evolution["chain"]["evolves_to"][0] != undefined) {
     evolution1 = evolution["chain"]["evolves_to"][0]["species"]["name"];
 
+    if (evolution1 == "basculegion") {
+      evolution1 = "basculegion-male";
+    }
     dataEvolution1 = await fetchpokemon(evolution1);
+
     if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
       evolution2 =
         evolution["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"];
@@ -201,8 +206,7 @@ const renderPokemon = async (pokemon) => {
   fetchEvolution(pokemon);
 };
 
-//Buttons 1
-
+//ControlsBlue
 buttonPrev.addEventListener("click", () => {
   if (searchPokemon > 1) {
     if (pokemonFilter == "") {
@@ -241,13 +245,12 @@ pokemonFilters.addEventListener("click", () => {
   }
 });
 
-//Buttons 2
+//ControlsRed
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   renderPokemon(input.value.toLowerCase());
 });
-
 buttonNext.addEventListener("click", () => {
   if (searchPokemon < 1011) {
     searchPokemon += 1;

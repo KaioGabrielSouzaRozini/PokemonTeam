@@ -41,8 +41,8 @@
   cursor: pointer;
 }
 
-/*Button 1 -------------------------------------------------------*/
-.controls1 {
+/*ControlsBlue -------------------------------------------------------*/
+.controlsBlue {
   width: 27%;
   height: 45vh;
   background-color: #37fceb;
@@ -110,8 +110,8 @@
   font-size: 0.9rem;
 }
 
-/*Button 2 -------------------------------------------------------*/
-.controls2 {
+/*ControlsRed -------------------------------------------------------*/
+.controlsRed {
   width: 27%;
   height: 45vh;
   background-color: #fd3d3d;
