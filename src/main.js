@@ -92,15 +92,40 @@ const fetchEvolution = async (pokemon) => {
   if (evolution["chain"]["evolves_to"][0] != undefined) {
     evolution1 = evolution["chain"]["evolves_to"][0]["species"]["name"];
 
+    //Resolução de alguns bugs com pokemons especificos
     if (evolution1 == "basculegion") {
-      evolution1 = "basculegion-male";
+      evolution1 = "902";
     }
+    if (evolution1 == "wormadam") {
+      evolution1 = "413";
+    }
+    if (evolution1 == "darmanitan") {
+      evolution1 = "555";
+    }
+    if (evolution1 == "meowstic") {
+      evolution1 = "678";
+    }
+    if (evolution1 == "gourgeist") {
+      evolution1 = "711";
+    }
+    if (evolution1 == "lycanroc") {
+      evolution1 = "745";
+    }
+    if (evolution1 == "toxtricity") {
+      evolution1 = "849";
+    }
+    if (evolution1 == "urshifu") {
+      evolution1 = "892";
+    }
+
     dataEvolution1 = await fetchpokemon(evolution1);
 
     if (evolution["chain"]["evolves_to"][0]["evolves_to"][0] != undefined) {
       evolution2 =
         evolution["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"];
-
+      if (evolution2 == "aegislash") {
+        evolution2 = "681";
+      }
       dataEvolution2 = await fetchpokemon(evolution2);
     }
   }
@@ -254,11 +279,11 @@ button5.addEventListener("click", () => {
 });
 
 divPokemonEvolve1.addEventListener("click", () => {
-  renderPokemon(dataEvolution1["name"]);
+  renderPokemon(dataEvolution1["id"]);
 });
 divPokemonEvolve2.addEventListener("click", () => {
   console.log();
-  renderPokemon(dataEvolution2["name"]);
+  renderPokemon(dataEvolution2["id"]);
 });
 
 renderPokemon(searchPokemon);
