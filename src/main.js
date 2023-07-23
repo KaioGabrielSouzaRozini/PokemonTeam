@@ -279,11 +279,16 @@ button5.addEventListener("click", () => {
 });
 
 divPokemonEvolve1.addEventListener("click", () => {
-  renderPokemon(dataEvolution1["id"]);
+  if (pokemonEvolve1.src == "http://127.0.0.1:5500/") {
+  } else {
+    renderPokemon(dataEvolution1["id"]);
+  }
 });
 divPokemonEvolve2.addEventListener("click", () => {
-  console.log();
-  renderPokemon(dataEvolution2["id"]);
+  if (pokemonEvolve2.src == "http://127.0.0.1:5500/") {
+  } else {
+    renderPokemon(dataEvolution2["id"]);
+  }
 });
 
 renderPokemon(searchPokemon);
